@@ -10,6 +10,7 @@ function App() {
   const [rabinTime, setRabinTime] = useState();
 
   const naiveSearch = () => {
+    console.time(`naive`)
     let M = pattern.length;
     let N = string.length;
     for (let i = 0; i <= N - M; i++) {
@@ -20,9 +21,11 @@ function App() {
       if (j === M)
         setNaive(i);
     }
+    console.timeEnd(`naive`)
   }
 
   const RabinSearch = () => {
+    console.time(`RabinSearch`)
     let d = 256;
     let q = 101;
     let M = pattern.length;
@@ -62,6 +65,7 @@ function App() {
           t = (t + q);
       }
     }
+    console.timeEnd(`RabinSearch`)
   }
 
   const handleNaiveClick = () => {
@@ -98,26 +102,29 @@ function App() {
 
 
   return (
-    <div className="App">
-      <p>String is : {string}</p>
-      <p>Pattern is : {pattern}</p>
-      <p>Pattern found by naive at index : {naive}</p>
-      <p>Pattern found by Rabin at index : {Rabin}</p>
+    <div className="root">
+      <div className="App">
 
-      <input type="text" placeholder="Enter string" onChange={e => setString(e.target.value)} />
-      <input type="text" placeholder="Enter Pattern" onChange={e => setPattern(e.target.value)} />
+        <p>String is : {string}</p>
+        <p>Pattern is : {pattern}</p>
+        <p>Pattern found by naive at index : {naive}</p>
+        <p>Pattern found by Rabin at index : {Rabin}</p>
 
-      <button onClick={handleNaiveClick}>Naive search</button>
-      <button onClick={handleRabinClick}>Rabin search</button>
+        <input type="text" placeholder="Enter string" onChange={e => setString(e.target.value)} />
+        <input type="text" placeholder="Enter Pattern" onChange={e => setPattern(e.target.value)} />
+
+        <button onClick={handleNaiveClick} disabled={string.length === 0 || pattern.length === 0 ? true : false}>Naive search</button>
+        <button onClick={handleRabinClick} disabled={string.length === 0 || pattern.length === 0 ? true : false}>Rabin search</button>
 
 
 
-      {/* <button onClick={handleClick}> search</button> */}
+        {/* <button onClick={handleClick}> search</button> */}
 
-      {/* <p>Execution time for Naive: {naiveTime} ms</p> */}
-      {/* <p>Execution time for Rabin: {rabinTime} ms</p> */}
-      {/* <p>hence Rabin is faster than naive by {naiveTime - rabinTime || 0}ms</p> */}
-    </div >
+        {/* <p>Execution time for Naive: {naiveTime} ms</p> */}
+        {/* <p>Execution time for Rabin: {rabinTime} ms</p> */}
+        {/* <p>hence Rabin is faster than naive by {naiveTime - rabinTime || 0}ms</p> */}
+      </div >
+    </div>
   );
 }
 
